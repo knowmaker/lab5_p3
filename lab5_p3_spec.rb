@@ -58,16 +58,10 @@ RSpec.describe Correct do
     it 'should change' do
       expect(Correct.new_str_array(test_ar)).to eq(test_ar_correct)
     end
-    it 'should change' do
-      expect(Correct.new_str_array(test_ar)).to eq(test_ar_correct)
-    end
   end
   context 'with correct strings 2' do
     before do
       test_ar, test_ar_correct = genwhch
-    end
-    it 'should NO change' do
-      expect(Correct.new_str_array(test_ar)).to eq(test_ar_correct)
     end
     it 'should NO change' do
       expect(Correct.new_str_array(test_ar)).to eq(test_ar_correct)
