@@ -2,47 +2,53 @@
 
 require_relative 'lab5_p3_func'
 require 'rspec'
-def gench
-  test_ar = []
-  test_ar_correct = []
-  Random.rand(1..5).times do # c_st
-    test_st = ''
-    test_st_correct = ''
-    Random.rand(2..10).times do # c_cl
-      test_cl = ''
-      Random.rand(2..10).times do # c_bukv
-        test_cl += Random.rand(65...85).chr
-      end
-      test_cl_correct = "т#{test_cl}е"
-      test_cl = "н#{test_cl}о"
-      test_st += "#{test_cl} "
-      test_st_correct += "#{test_cl_correct} "
-    end
-    test_ar.push(test_st.strip!)
-    test_ar_correct.push(test_st_correct.strip!)
-  end
-  [test_ar, test_ar_correct]
-end
 
-def genwhch
-  test_ar = []
-  test_ar_correct = []
-  Random.rand(1..5).times do # c_st
-    test_st = ''
-    test_st_correct = ''
-    Random.rand(2..10).times do # c_cl
-      test_cl = ''
-      Random.rand(2..10).times do # c_bukv
-        test_cl += Random.rand(65...85).chr
+# :reek:TooManyStatements { max_statements: 16 }
+
+# class for generating array of strings
+class Gens
+  def self.gench
+    test_ar = []
+    test_ar_correct = []
+    Random.rand(1..5).times do # c_st
+      test_st = ''
+      test_st_correct = ''
+      Random.rand(2..10).times do # c_cl
+        test_cl = ''
+        Random.rand(2..9).times do # c_bukv
+          test_cl += Random.rand(65...85).chr
+        end
+        test_cl_correct = "т#{test_cl}е"
+        test_cl = "н#{test_cl}о"
+        test_st += "#{test_cl} "
+        test_st_correct += "#{test_cl_correct} "
       end
-      test_cl_correct = test_cl
-      test_st += "#{test_cl} "
-      test_st_correct += "#{test_cl_correct} "
+      test_ar.push(test_st.strip!)
+      test_ar_correct.push(test_st_correct.strip!)
     end
-    test_ar.push(test_st.strip!)
-    test_ar_correct.push(test_st_correct.strip!)
+    [test_ar, test_ar_correct]
   end
-  [test_ar, test_ar_correct]
+
+  def self.genwhch
+    test_ar = []
+    test_ar_correct = []
+    Random.rand(1..5).times do # c_st
+      test_st = ''
+      test_st_correct = ''
+      Random.rand(2..10).times do # c_cl
+        test_cl = ''
+        Random.rand(2..9).times do # c_bukv
+          test_cl += Random.rand(65...85).chr
+        end
+        test_cl_correct = test_cl
+        test_st += "#{test_cl} "
+        test_st_correct += "#{test_cl_correct} "
+      end
+      test_ar.push(test_st.strip!)
+      test_ar_correct.push(test_st_correct.strip!)
+    end
+    [test_ar, test_ar_correct]
+  end
 end
 
 RSpec.describe Correct do
@@ -50,7 +56,7 @@ RSpec.describe Correct do
   test_ar_correct = []
   context 'with correct strings 1' do
     before do
-      test_ar, test_ar_correct = gench
+      test_ar, test_ar_correct = Gens.gench
     end
     it 'should change' do
       expect(Correct.new_str_array(test_ar)).to eq(test_ar_correct)
@@ -61,7 +67,7 @@ RSpec.describe Correct do
   end
   context 'with correct strings 2' do
     before do
-      test_ar, test_ar_correct = genwhch
+      test_ar, test_ar_correct = Gens.genwhch
     end
     it 'should NO change' do
       expect(Correct.new_str_array(test_ar)).to eq(test_ar_correct)
